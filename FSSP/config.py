@@ -38,3 +38,21 @@ headers = {
     'sec-ch-ua-mobile': '?0',
     'sec-ch-ua-platform': '"Windows"',
 }
+
+
+address_field = 'Адрес'
+price_field = 'Цена'
+organizer_field = 'Организатор'
+name_field = 'Номер лота/Описние'
+area_field = 'Площадь'
+cadastr_field = 'Кадастровый номер'
+encumbrance_field = 'Обременение'
+descr_encum_field = 'Описание обременения'
+owner_field = 'Собственник'
+type_of_law_field = 'Вид права'
+start_field = 'Начало торгов'
+finish_field = 'Окончание торгов'
+status_field = 'Статус'
+subject_field = 'Предмет торга'
+type_of_property_field = 'Тип собственности' 
+link_field = 'Ссылка'
