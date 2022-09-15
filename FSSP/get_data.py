@@ -27,7 +27,7 @@ def get_data(url):
     
     #Назначением объекта
 
-    regex = re.compile('авп\d*\s*\d+\.?\,?\d*\s*кв\.м\.')
+    regex = re.compile('\d*\s*\d+\.?\,?\d*\s*кв\.м')
     area = regex.search(name)
     if area:
         area = area[0] #Площадь
@@ -48,23 +48,21 @@ def get_data(url):
     else:
         encumbrance = '-' #Отсутствие обременения
 
-    descr_encum = soup.find(string='Описание обременения:').parent
+    descr_encum = soup.find(string='Описание обременения:')
 
     if descr_encum:
+        descr_encum = descr_encum.parent
         descr_encum = descr_encum.find_next_sibling('td').text #Описание обременения
     else:
         descr_encum = '-' #Отсутствие описания обременения
 
     regex_fio = re.compile('[А-Я][а-я]+\s?[А-Я]\.+\s?[А-Я]\.')
-    regex_fio_full = re.compile('[А-Я][а-я]+\s[А-Я][а-я]+\s[А-Я][а-я]+\s')
+    #regex_fio_full = re.compile('[А-Я][а-я]+\s?[А-Я][а-я]+\s?[А-Я][а-я]+\s?')
 
     fio = regex_fio.search(name)
-    fio_full = regex_fio_full.search(name)
 
     if fio:
         owner = fio[0] #Собственник
-    elif fio_full:
-        owner = fio_full[0] #Собственник
     else:
         owner = '-' #Отсутствует собственник
     
@@ -81,11 +79,24 @@ def get_data(url):
     finish = soup.find(string='Дата окончания подачи заявок:').parent  
     finish = finish.find_next_sibling('td').text #Дата окончания подачи заявок
 
-    status = soup.find(string='Статус:').parent  
-    status = status.find_next_sibling('td').text #Статус
+    status = soup.find(string='Статус:')
+    if status:
+        status = status.parent  
+        status = status.find_next_sibling('td').text #Статус
+    else:
+        status = soup.find(string='Статус торгов:')
+        if status: 
+            status = status.parent  
+            status = status.find_next_sibling('td').text #Статус
+        else:
+            status = '-'
 
-    subject = soup.find(string='Предмет торга:').parent  
-    subject = subject.find_next_sibling('td').text #Предмет торга
+    subject = soup.find(string='Предмет торга:')
+    if subject:
+        subject = subject.parent  
+        subject = subject.find_next_sibling('td').text #Предмет торга
+    else:
+        subject = '-'
 
     type_of_property = soup.find(string='Вид имущества:').parent  
     type_of_property = type_of_property.find_next_sibling('td').text #Тип собственности

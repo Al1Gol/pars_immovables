@@ -29,7 +29,7 @@ def get_links():
         type_of_property_field: [], 
         link_field: [],
     }
-    
+
     for region in regions:
         for status in statuses:
 
@@ -69,7 +69,9 @@ def get_links():
                 lots_num = soup.find_all(text=regex)
                 for lot in lots_num:
                     link = site + lot.find_parent()['href']
+                    
                     data = get_data(link)
+
                     result_data[address_field].append(data['address'])
                     result_data[price_field].append(data['price'])
                     result_data[organizer_field].append(data['organizer'])
